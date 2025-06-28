@@ -190,7 +190,7 @@ public class AssistantBot extends Bot {
             final float progress = Utils.getField(progressBar, "progress");
             if (progress == 0f && creationWindow.getActionInUse() == 0){
                 if (wovCasting && Math.abs(lastWOV - System.currentTimeMillis()) > 1810000) {
-    float favor = getPlayer().getSkillSet().getSkillValue("favor");
+    float favor = player.getSkillSet().getSkillValue("favor");
     if (favor > 30) {
         successfullCasting = false;
         successfullCastStart = false;
@@ -198,7 +198,7 @@ public class AssistantBot extends Bot {
         int counter = 0;
         while (wovCasting && !successfullCastStart && counter++ < 50 && !needWaitWov) {
             if (verbose) Utils.consolePrint("successfullCastStart counter=" + counter);
-            getServerConnection().sendAction(statuetteId, new long[]{bodyId}, PlayerAction.WISDOM_OF_VYNORA);
+            serverConnection.sendAction(statuetteId, new long[]{bodyId}, PlayerAction.WISDOM_OF_VYNORA);
             sleep(500);
         }
         counter = 0;
@@ -212,15 +212,15 @@ public class AssistantBot extends Bot {
             lastWOV = System.currentTimeMillis();
     }
 } else if (casting) {
-    float favor = getPlayer().getSkillSet().getSkillValue("favor");
+    float favor = player.getSkillSet().getSkillValue("favor");
     if (favor > spellToCast.favorCap) {
         successfullCasting = false;
         successfullCastStart = false;
         int counter = 0;
         while (casting && !successfullCastStart && counter++ < 50 && favor > spellToCast.favorCap) {
             if (verbose) Utils.consolePrint("successfullCastStart counter=" + counter);
-            getServerConnection().sendAction(statuetteId, new long[]{bodyId}, spellToCast.playerAction);
-            favor = getPlayer().getSkillSet().getSkillValue("favor");
+            serverConnection.sendAction(statuetteId, new long[]{bodyId}, spellToCast.playerAction);
+            favor = player.getSkillSet().getSkillValue("favor");
             sleep(500);
         }
         counter = 0;
