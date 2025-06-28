@@ -189,47 +189,47 @@ public class AssistantBot extends Bot {
             waitOnPause();
             final float progress = Utils.getField(progressBar, "progress");
             if (progress == 0f && creationWindow.getActionInUse() == 0){
-                if (casting) {
-                    float favor = player.getSkillSet().getSkillValue("favor");
-                    if (favor > spellToCast.favorCap) {
-                        successfullCasting = false;
-                        successfullCastStart = false;
-                        int counter = 0;
-                        while (casting && !successfullCastStart && counter++ < 50 && favor > spellToCast.favorCap) {
-                            if (verbose) Utils.consolePrint("successfullCastStart counter=" + counter);
-                            serverConnection.sendAction(statuetteId, new long[]{bodyId}, spellToCast.playerAction);
-                            favor = player.getSkillSet().getSkillValue("favor");
-                            sleep(500);
-                        }
-                        counter = 0;
-                        while (casting && !successfullCasting && counter++ < 100 && favor > spellToCast.favorCap) {
-                            if (verbose) Utils.consolePrint("successfullCasting counter=" + counter);
-                            sleep(2000);
-                        }
-                    }
-                } else if (wovCasting && Math.abs(lastWOV - System.currentTimeMillis()) > 1810000) {
-                    float favor = player.getSkillSet().getSkillValue("favor");
-                    if (favor > 30) {
-                        successfullCasting = false;
-                        successfullCastStart = false;
-                        needWaitWov = false;
-                        int counter = 0;
-                        while (wovCasting && !successfullCastStart && counter++ < 50 && !needWaitWov) {
-                            if (verbose) Utils.consolePrint("successfullCastStart counter=" + counter);
-                            serverConnection.sendAction(statuetteId, new long[]{bodyId}, PlayerAction.WISDOM_OF_VYNORA);
-                            sleep(500);
-                        }
-                        counter = 0;
-                        while (wovCasting && !successfullCasting && counter++ < 100 && !needWaitWov) {
-                            if (verbose) Utils.consolePrint("successfullCasting counter=" + counter);
-                            sleep(2000);
-                        }
-                        if (needWaitWov)
-                            lastWOV = lastWOV + 20000;
-                        else
-                            lastWOV = System.currentTimeMillis();
-                    }
-                }
+                if (wovCasting && Math.abs(lastWOV - System.currentTimeMillis()) > 1810000) {
+    float favor = Mod.hud.getWorld().getPlayer().getSkillSet().getSkillValue("favor");
+    if (favor > 30) {
+        successfullCasting = false;
+        successfullCastStart = false;
+        needWaitWov = false;
+        int counter = 0;
+        while (wovCasting && !successfullCastStart && counter++ < 50 && !needWaitWov) {
+            if (verbose) Utils.consolePrint("successfullCastStart counter=" + counter);
+            Mod.hud.getWorld().getServerConnection().sendAction(statuetteId, new long[]{bodyId}, PlayerAction.WISDOM_OF_VYNORA);
+            sleep(500);
+        }
+        counter = 0;
+        while (wovCasting && !successfullCasting && counter++ < 100 && !needWaitWov) {
+            if (verbose) Utils.consolePrint("successfullCasting counter=" + counter);
+            sleep(2000);
+        }
+        if (needWaitWov)
+            lastWOV = lastWOV + 20000;
+        else
+            lastWOV = System.currentTimeMillis();
+    }
+} else if (casting) {
+    float favor = Mod.hud.getWorld().getPlayer().getSkillSet().getSkillValue("favor");
+    if (favor > spellToCast.favorCap) {
+        successfullCasting = false;
+        successfullCastStart = false;
+        int counter = 0;
+        while (casting && !successfullCastStart && counter++ < 50 && favor > spellToCast.favorCap) {
+            if (verbose) Utils.consolePrint("successfullCastStart counter=" + counter);
+            Mod.hud.getWorld().getServerConnection().sendAction(statuetteId, new long[]{bodyId}, spellToCast.playerAction);
+            favor = Mod.hud.getWorld().getPlayer().getSkillSet().getSkillValue("favor");
+            sleep(500);
+        }
+        counter = 0;
+        while (casting && !successfullCasting && counter++ < 100 && favor > spellToCast.favorCap) {
+            if (verbose) Utils.consolePrint("successfullCasting counter=" + counter);
+            sleep(2000);
+        }
+    }
+}
                 if (drinking) {
                     float thirst = player.getThirst();
                     if (thirst > 0.1) {
