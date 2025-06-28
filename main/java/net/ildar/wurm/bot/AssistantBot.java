@@ -962,7 +962,7 @@ public class AssistantBot extends Bot {
             this.altarId = altarId;
             lastPrayer = 0;
             Utils.consolePrint(this.getClass().getSimpleName() + " praying is on!");
-            changePrayerTimeout(1230000);
+            changePrayerTimeout(2400000);
         } else
             Utils.consolePrint("Praying is off!");
 
